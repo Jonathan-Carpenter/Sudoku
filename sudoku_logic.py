@@ -7,6 +7,7 @@ from time import sleep
 class Sudoku:
     def __init__(self, difficulty=0.7):
         self.difficulty = difficulty
+        self.game_over = False
 
         success = False
         while not success:
@@ -56,6 +57,7 @@ class Sudoku:
             for cell in row:
                 if cell.entry == None:
                     return False
+        self.game_over = True
         return True
 
 
@@ -92,7 +94,7 @@ class GUISudoku(Sudoku):
         cell.widget["bg"] = cell.default_colour
 
     def set_active_cell(self, cell):
-        if cell.widget["bg"] == self.known_colour: return
+        if self.game_over or cell.widget["bg"] == self.known_colour: return
 
         if self.active_cell != None:
             self.active_cell.set_colour(self.active_cell.default_colour)
@@ -107,6 +109,7 @@ class GUISudoku(Sudoku):
         self.active_cell.set_entry(event.char)
 
         if self.win_state():
+            self.active_cell = None
             self.win_animation()
 
     def win_animation(self):
@@ -121,7 +124,7 @@ class GUISudoku(Sudoku):
             for c in range(0,9,3):
                 nines.append(self.get_square(r,c))
 
-        for _ in range(9):
+        for _ in range(3):
             for cell_set in nines:
                 for cell in cell_set:
                     cell.set_colour(self.invalid_colour)
