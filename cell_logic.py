@@ -19,22 +19,23 @@ class Cell:
     def isValid(self):
         r, c = self.pos[0], self.pos[1]
 
-        exclusives = (self.master.getRow(r)
-                    + self.master.getCol(r, c)
-                    + self.master.getSquare(r, c))
+        exclusives = (self.master.get_row(r)
+                    + self.master.get_col(r, c)
+                    + self.master.get_square(r, c))
 
         for cell in exclusives:
-            if self == cell: return False
+            if self == cell and cell.pos != self.pos:
+                return False
         return True
 
-    def getValids(self):
+    def get_valids(self):
         r, c = self.pos[0], self.pos[1]
 
         # print("Getting valid entries for {}".format((r,c)))
 
-        exclusives = (self.master.getRow(r)
-                    + self.master.getCol(r, c)
-                    + self.master.getSquare(r, c))
+        exclusives = (self.master.get_row(r)
+                    + self.master.get_col(r, c)
+                    + self.master.get_square(r, c))
 
         valids = set([1,2,3,4,5,6,7,8,9])
         for cell in exclusives:
@@ -52,17 +53,26 @@ class GUICell(Cell):
         self.set_colour(default_colour)
 
     def set_colour(self, colour):
-        if self.widget != None: self.widget["bg"] = colour
+        if self.widget != None:
+            self.widget["bg"] = colour
+            self.widget.update()
 
     def set_entry(self, num):
+        if num == "0":
+            self.clear()
+            return
+
         self.widget["text"] = num
         self.entry = int(float(num))
 
         if self.isValid():
-            self.widget["bg"] = self.default_colour
+            self.set_colour(self.default_colour)
         else:
-            self.widget["bg"] = self.master.invalid_colour
-            sleep(0.1)
-            self.widget["bg"] = self.default_colour
-            self.widget["text"] = ""
-            self.entry = None
+            self.set_colour(self.master.invalid_colour)
+            sleep(1)
+            self.clear()
+
+    def clear(self):
+        self.entry = None
+        self.widget["bg"] = self.default_colour
+        self.widget["text"] = ""
