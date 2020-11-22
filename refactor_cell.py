@@ -25,18 +25,25 @@ class Cell:
         return True
 
     def getValids(self):
+        r, c = self.pos[0], self.pos[1]
+
+        # print("Getting valid entries for {}".format((r,c)))
+
         exclusives = (self.master.getRow(r)
-                    + self.master.getCol(c)
+                    + self.master.getCol(r, c)
                     + self.master.getSquare(r, c))
 
-        valids = set()
+        valids = set([1,2,3,4,5,6,7,8,9])
         for cell in exclusives:
             if cell.entry in valids: valids.remove(cell.entry)
-        return valids
+        return list(valids)
 
 class GUICell(Cell):
-    def __init__(self, widget=None, default_colour=self.master.known_colour):
-        super().__init__(self)
+    def __init__(self, widget=None, default_colour=None):
+        super().__init__()
         self.widget = widget
-        self.default_colour = default_colour
-        self.current_colour = current_colour
+
+        if default_colour == None: default_colour = self.master.default_colour
+        else: self.default_colour = default_colour
+
+        self.current_colour = default_colour
