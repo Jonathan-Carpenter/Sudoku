@@ -4,6 +4,8 @@ This is a Sudoku game made using the `tkinter` Python library. The game generate
 
 The number of cells made blank is a proportion of the total, set by the difficulty value, i.e. a value of 0 means that the puzzle is already solved, while a value of 1 means that all cells are blank.
 
+How to run:
+
 Download all source files and run `sudoku_main.py`. To change the difficulty, run `sudoku_main.py --difficulty <val>`.
 
 How to play:
