@@ -6,7 +6,7 @@ The number of cells made blank is a proportion of the total, set by the difficul
 
 Download all source files and run `sudoku_main.py`. To change the difficulty, run `sudoku_main.py --difficulty <val>`.
 
-Instructions:
+How to play:
 - As per the rules of Sudoku, each cell needs to be filled with a number 1-9 such that no row, column or 3x3 square contains duplicate numbers.
 - Click on a cell and press a number key to insert that number in that cell. (Cells which were filled from the start cannot be changed.)
 - Click on a cell and press the '0' key to remove a number which you inserted there.
