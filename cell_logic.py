@@ -60,6 +60,7 @@ class GUICell(Cell):
     def set_entry(self, num):
         if num == "0":
             self.clear()
+            self.master.active_cell = None
             return
 
         self.widget["text"] = num
