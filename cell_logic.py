@@ -58,9 +58,10 @@ class GUICell(Cell):
             self.widget.update()
 
     def set_entry(self, num):
+        self.master.active_cell = None
+
         if num == "0":
             self.clear()
-            self.master.active_cell = None
             return
 
         self.widget["text"] = num
